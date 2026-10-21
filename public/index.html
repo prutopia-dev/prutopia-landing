@@ -5917,8 +5917,8 @@ function switchDemoRole() {
 
 /* DEMO SCOPED CSS */
 
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-.demo-scope :root {
+.demo-scope *,.demo-scope *::before,.demo-scope *::after{box-sizing:border-box;margin:0;padding:0}
+.demo-scope {
   --amber:#C17A2A;--amber-light:#F5E6C8;--amber-dark:#8B5A1A;
   --amber-pale:#FDF3E3;--cream:#FDFAF5;--ink:#1C1612;
   --ink-muted:#6B5D4F;--ink-faint:#B8A99A;
@@ -5929,7 +5929,7 @@ function switchDemoRole() {
   --font-b:'DM Sans',sans-serif;
 }
 .demo-scope html {scroll-behavior:smooth}
-.demo-scope body {background:var(--cream);color:var(--ink);font-family:var(--font-b);font-size:15px;line-height:1.6;min-height:100vh}
+.demo-scope {background:var(--cream);color:var(--ink);font-family:var(--font-b);font-size:15px;line-height:1.6;min-height:100vh}
 
 /* DEMO BANNER */
 .demo-scope .demo-banner {
@@ -6126,7 +6126,6 @@ function switchDemoRole() {
 .demo-scope #lock-screen { position: absolute; top: 0; }
 .demo-scope .app-shell { max-width: 100%; }
 .demo-scope .bottom-nav { position: sticky; bottom: 0; left: 0; transform: none; width: 100%; max-width: 100%; }
-.demo-scope .toast { position: fixed; }
 </style>
 
 <!-- CTA -->
