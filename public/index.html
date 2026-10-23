@@ -23,6 +23,25 @@
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
 
+  /* ── FOND BINAIRE (repris de la signature mail) ── */
+  .binary-bg {
+    position: fixed; inset: 0; z-index: 50;
+    pointer-events: none; user-select: none; overflow: hidden;
+    margin: 0; padding: 6px 10px;
+    font-family: ui-monospace, "SF Mono", Menlo, Consolas, "DejaVu Sans Mono", monospace;
+    font-weight: 700; font-size: 13px; line-height: 1.85; letter-spacing: .55em;
+    color: #E2C189; white-space: pre;
+    mix-blend-mode: multiply; opacity: .55;
+    -webkit-mask-image: linear-gradient(90deg, #000 0%, rgba(0,0,0,.25) 22%, rgba(0,0,0,.12) 50%, rgba(0,0,0,.25) 78%, #000 100%);
+            mask-image: linear-gradient(90deg, #000 0%, rgba(0,0,0,.25) 22%, rgba(0,0,0,.12) 50%, rgba(0,0,0,.25) 78%, #000 100%);
+  }
+  @media (max-width: 768px) {
+    .binary-bg { font-size: 11px; opacity: .32;
+      -webkit-mask-image: linear-gradient(90deg, rgba(0,0,0,.7), rgba(0,0,0,.15) 30%, rgba(0,0,0,.15) 70%, rgba(0,0,0,.7));
+              mask-image: linear-gradient(90deg, rgba(0,0,0,.7), rgba(0,0,0,.15) 30%, rgba(0,0,0,.15) 70%, rgba(0,0,0,.7)); }
+  }
+  @media print { .binary-bg { display: none; } }
+
   body {
     font-family: 'DM Sans', sans-serif;
     background: var(--cream);
@@ -398,6 +417,41 @@
 <body>
 
 <!-- NAV -->
+<pre class="binary-bg" id="binary-bg" aria-hidden="true"></pre>
+<script>
+(function () {
+  var el = document.getElementById('binary-bg');
+  if (!el) return;
+  var grid = [], cols = 0, rows = 0;
+  var bit = function () { return Math.random() < .5 ? '0' : '1'; };
+  function render() { el.textContent = grid.map(function (r) { return r.join(''); }).join('\n'); }
+  function build() {
+    var probe = document.createElement('span');
+    probe.textContent = '0000000000';
+    el.textContent = ''; el.appendChild(probe);
+    var cw = probe.getBoundingClientRect().width / 10 || 12;
+    var lh = parseFloat(getComputedStyle(el).lineHeight) || 24;
+    cols = Math.ceil(window.innerWidth / cw) + 2;
+    rows = Math.ceil(window.innerHeight / lh) + 2;
+    grid = [];
+    for (var y = 0; y < rows; y++) { var r = []; for (var x = 0; x < cols; x++) r.push(bit()); grid.push(r); }
+    render();
+  }
+  build();
+  var t; window.addEventListener('resize', function () { clearTimeout(t); t = setTimeout(build, 200); });
+  // Quelques chiffres basculent doucement — désactivé si l'utilisateur préfère moins d'animations
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  setInterval(function () {
+    if (document.hidden) return;
+    var n = Math.max(4, Math.round(cols * rows / 120));
+    for (var i = 0; i < n; i++) {
+      var y = Math.floor(Math.random() * rows), x = Math.floor(Math.random() * cols);
+      grid[y][x] = grid[y][x] === '0' ? '1' : '0';
+    }
+    render();
+  }, 180);
+})();
+</script>
 <nav>
   <div class="nav-logo"><svg xmlns="http://www.w3.org/2000/svg" width="160" height="100" viewBox="0 0 160 100">
   
