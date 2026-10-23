@@ -53,8 +53,14 @@
   .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
   .signature { background: var(--carte); border: 1px solid var(--ligne); border-radius: 18px; padding: 20px; }
   .signature img { max-width: 100%; height: auto; display: block; }
-  .liens { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 14px; }
+  .liens { display: flex; flex-wrap: wrap; gap: 10px 18px; align-items: center; margin-top: 14px; }
   .liens a { font-size: 14px; color: var(--accent-fonce); }
+  .bouton { display: inline-flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 500; text-decoration: none; padding: 9px 18px; border-radius: 999px; background: var(--encre); color: #FAEEDA !important; }
+  .bouton:hover { background: var(--accent-fonce); }
+  #signature { scroll-margin-top: 230px; }
+  .raccourcis { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin: -12px 0 24px; }
+  .raccourcis .bouton.clair { background: var(--carte); color: var(--accent-fonce) !important; border: 1px solid var(--ligne); }
+  .raccourcis .bouton.clair:hover { background: var(--prutopia-clair); }
   .usage { background: var(--carte); border: 1px solid var(--ligne); border-radius: 18px; padding: 6px 20px 14px; }
   .usage pre { background: var(--page); border: 1px solid var(--ligne); border-radius: 12px; padding: 12px; overflow-x: auto; font-size: 12.5px; }
   .message { position: fixed; left: 50%; bottom: 20px; transform: translateX(-50%); background: var(--encre); color: #FAEEDA; padding: 10px 16px; border-radius: 999px; font-size: 14px; opacity: 0; transition: opacity .2s; pointer-events: none; }
@@ -678,6 +684,11 @@ m-7220 -37 c0 -7 3 -30 6 -50 l7 -38 -40 0 c-73 0 -82 43 -17 81 36 21 44 23
 113 l-89 45 -170 3 c-102 1 -177 -2 -186 -8z"/></g></g></svg>
 <h1>Kit de marque <em>Pr'UtopIA</em></h1></div>
   <p class="intro">Tous les éléments de l'identité, dans la teinte de ton choix et à la taille voulue. Choisis une teinte (ou tes propres couleurs), puis télécharge chaque élément en <b>SVG</b> (net à toutes les tailles) ou en <b>PNG</b> (à la largeur indiquée). Les textes sont vectorisés : aucun fichier ne dépend d'une police.</p>
+
+  <nav class="raccourcis" aria-label="Raccourcis">
+    <a class="bouton" href="signature/signature.html">✉ Ma signature mail</a>
+    <a class="bouton clair" href="#signature">Voir la section signature</a>
+  </nav>
 
   <section class="teintes" aria-label="Teintes">
     <div class="chips" role="group" aria-label="Teintes prédéfinies"><button type="button" class="chip" data-preset="Ambre"><span style="background:#C17A2A"></span><span style="background:#8B5A1A"></span>Ambre</button><button type="button" class="chip" data-preset="Vert feuille"><span style="background:#4CAF50"></span><span style="background:#2D6A2D"></span>Vert feuille</button><button type="button" class="chip" data-preset="Marron"><span style="background:#6B3510"></span><span style="background:#3E1C00"></span>Marron</button><button type="button" class="chip" data-preset="Crème"><span style="background:#C8AA76"></span><span style="background:#8B7245"></span>Crème</button><button type="button" class="chip" data-preset="Gris"><span style="background:#666666"></span><span style="background:#333333"></span>Gris</button><button type="button" class="chip" data-preset="Noir"><span style="background:#333333"></span><span style="background:#111111"></span>Noir</button><button type="button" class="chip" data-preset="Blanc (fond sombre)"><span style="background:#FFFFFF"></span><span style="background:#DDDDDD"></span>Blanc (fond sombre)</button></div>
@@ -5080,11 +5091,11 @@ m-7220 -37 c0 -7 3 -30 6 -50 l7 -38 -40 0 c-73 0 -82 43 -17 81 36 21 44 23
   </figcaption>
 </figure></div>
 
-  <h2>Signature mail</h2>
+  <h2 id="signature">Signature mail</h2>
   <div class="signature">
     <img src="signature/apercu.png" alt="Aperçu de la signature mail Pr'UtopIA" width="560">
     <div class="liens">
-      <a href="signature/signature.html">signature.html (à copier dans la messagerie)</a>
+      <a class="bouton" href="signature/signature.html">Personnaliser et copier ma signature</a>
       <a href="signature/INSTALLATION.md">Guide d'installation</a>
     </div>
   </div>
