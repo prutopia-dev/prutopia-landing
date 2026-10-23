@@ -3,6 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="alternate" hreflang="fr" href="https://prutopia.net/?lang=fr">
+<link rel="alternate" hreflang="en" href="https://prutopia.net/?lang=en">
+<style>.i18n-pending body{visibility:hidden}</style>
+<script>
+/* Évite d'afficher le français une fraction de seconde aux visiteurs anglophones (voir i18n.js) */
+(function(){try{var q=new URLSearchParams(location.search).get('lang'),l=q||localStorage.getItem('prutopia-lang');
+if(l!=='en'&&l!=='fr'){var n=(navigator.languages&&navigator.languages[0])||navigator.language||'fr';l=/^fr\b/i.test(n)?'fr':'en';}
+if(l==='en'){var h=document.documentElement;h.lang='en';h.classList.add('i18n-pending');setTimeout(function(){h.classList.remove('i18n-pending');},2500);}}catch(e){}})();
+</script>
 <title>Pr'Utopia — Conseil numérique</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -22,6 +31,24 @@
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  /* ── SÉLECTEUR DE LANGUE ── */
+  .nav-right { display: flex; align-items: center; gap: 1rem; }
+  .lang-switch { display: inline-flex; border: 1px solid var(--border); border-radius: 40px; padding: 2px; background: rgba(255,255,255,.6); }
+  .lang-switch button {
+    font-family: 'DM Sans', sans-serif; font-size: 11px; font-weight: 500; letter-spacing: .08em;
+    border: none; background: transparent; color: var(--muted);
+    padding: .3rem .6rem; border-radius: 40px; cursor: pointer; transition: background .2s, color .2s;
+  }
+  .lang-switch button:hover { color: var(--amber); }
+  .lang-switch button.active { background: var(--brown); color: var(--amber-light); }
+  @media (max-width: 768px) {
+    .nav-right { gap: .5rem; }
+    .lang-switch button { padding: .25rem .45rem; font-size: 10px; }
+  }
+  @media (max-width: 390px) {
+    .btn-nav { padding: .45rem .8rem !important; font-size: 11px !important; }
+  }
 
   /* ── FOND BINAIRE (repris de la signature mail) — côté droit uniquement ── */
   .binary-bg {
@@ -2911,7 +2938,13 @@ m-7220 -37 c0 -7 3 -30 6 -50 l7 -38 -40 0 c-73 0 -82 43 -17 81 36 21 44 23
     <li><a href="#approche">Notre approche</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
-  <button class="btn-nav" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Parlons de votre projet ↗</button>
+  <div class="nav-right">
+    <div class="lang-switch" role="group" aria-label="Langue / Language">
+      <button type="button" data-lang="fr" lang="fr" aria-pressed="true" class="active">FR</button>
+      <button type="button" data-lang="en" lang="en" aria-pressed="false">EN</button>
+    </div>
+    <button class="btn-nav" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Parlons de votre projet ↗</button>
+  </div>
 </nav>
 
 <!-- HERO -->
@@ -6080,7 +6113,8 @@ function switchDemoRole() {
 /* FORM */
 .demo-scope .form-card {background:#fff;border:1px solid var(--border);border-radius:var(--r-lg);padding:1.25rem;margin-bottom:1.25rem;display:flex;flex-direction:column;gap:13px}
 .demo-scope .form-section-title {font-family:var(--font-d);font-size:15px;color:var(--ink);padding-bottom:10px;border-bottom:1px solid var(--border)}
-.demo-scope .form-row {display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.demo-scope .form-row {display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px}
+.demo-scope .ff input,.demo-scope .ff select,.demo-scope .ff textarea {min-width:0;max-width:100%;box-sizing:border-box}
 .demo-scope .ff {display:flex;flex-direction:column;gap:5px}
 .demo-scope .ff label {font-size:10px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-muted)}
 .demo-scope .ff input, .demo-scope .ff select, .demo-scope .ff textarea {font-size:14px;font-family:var(--font-b);background:var(--cream);border:1px solid var(--border-md);border-radius:var(--r-sm);padding:8px 10px;color:var(--ink);outline:none;transition:border-color .15s}
@@ -9812,5 +9846,6 @@ m-7220 -37 c0 -7 3 -30 6 -50 l7 -38 -40 0 c-73 0 -82 43 -17 81 36 21 44 23
 })();
 </script>
 
+<script src="i18n.js"></script>
 </body>
 </html>
