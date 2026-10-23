@@ -32,24 +32,6 @@ if(l==='en'){var h=document.documentElement;h.lang='en';h.classList.add('i18n-pe
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
 
-  /* ── SÉLECTEUR DE LANGUE ── */
-  .nav-right { display: flex; align-items: center; gap: 1rem; }
-  .lang-switch { display: inline-flex; border: 1px solid var(--border); border-radius: 40px; padding: 2px; background: rgba(255,255,255,.6); }
-  .lang-switch button {
-    font-family: 'DM Sans', sans-serif; font-size: 11px; font-weight: 500; letter-spacing: .08em;
-    border: none; background: transparent; color: var(--muted);
-    padding: .3rem .6rem; border-radius: 40px; cursor: pointer; transition: background .2s, color .2s;
-  }
-  .lang-switch button:hover { color: var(--amber); }
-  .lang-switch button.active { background: var(--brown); color: var(--amber-light); }
-  @media (max-width: 768px) {
-    .nav-right { gap: .5rem; }
-    .lang-switch button { padding: .25rem .45rem; font-size: 10px; }
-  }
-  @media (max-width: 390px) {
-    .btn-nav { padding: .45rem .8rem !important; font-size: 11px !important; }
-  }
-
   /* ── FOND BINAIRE (repris de la signature mail) — côté droit uniquement ── */
   .binary-bg {
     position: fixed; top: 0; bottom: 0; right: 0; left: 55%; z-index: 50;
@@ -436,6 +418,39 @@ if(l==='en'){var h=document.documentElement;h.lang='en';h.classList.add('i18n-pe
     height: 88%;
     object-fit: contain;
     display: block;
+  }
+
+  /* ── MENU : sélecteur FR | EN + tenue sur toutes les largeurs ──
+     Placé en fin de feuille pour passer après les règles mobiles d'origine. */
+  .btn-nav { white-space: nowrap; }
+  .nav-right { display: flex; align-items: center; gap: 1.4rem; flex-shrink: 0; }
+  .lang-switch { display: inline-flex; align-items: center; }
+  .lang-switch button {
+    font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 500;
+    letter-spacing: .1em; text-transform: uppercase; line-height: 1;
+    border: none; background: transparent; color: var(--muted);
+    padding: .2rem .45rem; cursor: pointer; transition: color .2s;
+  }
+  .lang-switch button + button { border-left: 1px solid var(--border); }
+  .lang-switch button:hover { color: var(--amber); }
+  .lang-switch button.active { color: var(--brown); font-weight: 700; }
+  @media (max-width: 1180px) {
+    nav { padding-left: 2rem; padding-right: 2rem; }
+    .nav-links { gap: 1.6rem; }
+  }
+  @media (max-width: 1000px) {
+    .nav-links { display: none; }
+  }
+  @media (max-width: 768px) {
+    .nav-right { gap: .9rem; }
+    .lang-switch button { font-size: 11px; padding: .2rem .35rem; }
+  }
+  @media (max-width: 400px) {
+    nav { padding-left: .9rem; padding-right: .9rem; }
+    .nav-logo svg { height: 52px; }
+    .nav-right { gap: .55rem; }
+    .btn-nav { font-size: 11px; padding: .45rem .8rem; }
+    .lang-switch button { font-size: 10px; padding: .2rem .28rem; letter-spacing: .06em; }
   }
 </style>
 </head>
@@ -2939,11 +2954,11 @@ m-7220 -37 c0 -7 3 -30 6 -50 l7 -38 -40 0 c-73 0 -82 43 -17 81 36 21 44 23
     <li><a href="#contact">Contact</a></li>
   </ul>
   <div class="nav-right">
+    <button class="btn-nav" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Parlons de votre projet ↗</button>
     <div class="lang-switch" role="group" aria-label="Langue / Language">
       <button type="button" data-lang="fr" lang="fr" aria-pressed="true" class="active">FR</button>
       <button type="button" data-lang="en" lang="en" aria-pressed="false">EN</button>
     </div>
-    <button class="btn-nav" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Parlons de votre projet ↗</button>
   </div>
 </nav>
 
