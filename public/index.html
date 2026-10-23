@@ -424,16 +424,32 @@ if(l==='en'){var h=document.documentElement;h.lang='en';h.classList.add('i18n-pe
      Placé en fin de feuille pour passer après les règles mobiles d'origine. */
   .btn-nav { white-space: nowrap; }
   .nav-right { display: flex; align-items: center; gap: 1.4rem; flex-shrink: 0; }
-  .lang-switch { display: inline-flex; align-items: center; }
-  .lang-switch button {
-    font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 500;
-    letter-spacing: .1em; text-transform: uppercase; line-height: 1;
-    border: none; background: transparent; color: var(--muted);
-    padding: .2rem .45rem; cursor: pointer; transition: color .2s;
+  .lang-switch { position: relative; }
+  .lang-current {
+    display: inline-flex; align-items: center; gap: .35rem;
+    font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 600;
+    letter-spacing: .1em; line-height: 1; color: var(--brown);
+    background: transparent; border: none; padding: .5rem .3rem; cursor: pointer; transition: color .2s;
   }
-  .lang-switch button + button { border-left: 1px solid var(--border); }
-  .lang-switch button:hover { color: var(--amber); }
-  .lang-switch button.active { color: var(--brown); font-weight: 700; }
+  .lang-current:hover, .lang-current[aria-expanded="true"] { color: var(--amber); }
+  .lang-current svg { transition: transform .2s; }
+  .lang-current[aria-expanded="true"] svg { transform: rotate(180deg); }
+  .lang-menu {
+    position: absolute; top: calc(100% + 6px); right: 0; z-index: 120;
+    list-style: none; margin: 0; padding: .35rem; min-width: 130px;
+    background: var(--cream); border: 1px solid var(--border); border-radius: 12px;
+    box-shadow: 0 12px 30px rgba(65,36,2,.12);
+  }
+  .lang-menu[hidden] { display: none; }
+  .lang-menu button {
+    display: flex; align-items: center; justify-content: space-between; gap: .75rem; width: 100%;
+    font-family: 'DM Sans', sans-serif; font-size: 13px; color: var(--brown);
+    background: transparent; border: none; border-radius: 8px; padding: .5rem .7rem;
+    text-align: left; cursor: pointer; transition: background .15s;
+  }
+  .lang-menu button:hover { background: var(--amber-light); }
+  .lang-menu button.active { font-weight: 600; color: var(--amber); }
+  .lang-menu button.active::after { content: "✓"; font-size: 12px; }
   @media (max-width: 1180px) {
     nav { padding-left: 2rem; padding-right: 2rem; }
     .nav-links { gap: 1.6rem; }
@@ -443,14 +459,14 @@ if(l==='en'){var h=document.documentElement;h.lang='en';h.classList.add('i18n-pe
   }
   @media (max-width: 768px) {
     .nav-right { gap: .9rem; }
-    .lang-switch button { font-size: 11px; padding: .2rem .35rem; }
+    .lang-current { font-size: 11px; }
   }
   @media (max-width: 400px) {
     nav { padding-left: .9rem; padding-right: .9rem; }
     .nav-logo svg { height: 52px; }
     .nav-right { gap: .55rem; }
     .btn-nav { font-size: 11px; padding: .45rem .8rem; }
-    .lang-switch button { font-size: 10px; padding: .2rem .28rem; letter-spacing: .06em; }
+    .lang-current { padding: .5rem .15rem; }
   }
 </style>
 </head>
@@ -2955,9 +2971,15 @@ m-7220 -37 c0 -7 3 -30 6 -50 l7 -38 -40 0 c-73 0 -82 43 -17 81 36 21 44 23
   </ul>
   <div class="nav-right">
     <button class="btn-nav" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Parlons de votre projet ↗</button>
-    <div class="lang-switch" role="group" aria-label="Langue / Language">
-      <button type="button" data-lang="fr" lang="fr" aria-pressed="true" class="active">FR</button>
-      <button type="button" data-lang="en" lang="en" aria-pressed="false">EN</button>
+    <div class="lang-switch">
+      <button type="button" class="lang-current" aria-haspopup="true" aria-expanded="false" aria-label="Langue / Language">
+        <span class="lang-code">FR</span>
+        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+      </button>
+      <ul class="lang-menu" role="menu" hidden>
+        <li><button type="button" role="menuitemradio" data-lang="fr" lang="fr" aria-checked="true" class="active">Français</button></li>
+        <li><button type="button" role="menuitemradio" data-lang="en" lang="en" aria-checked="false">English</button></li>
+      </ul>
     </div>
   </div>
 </nav>

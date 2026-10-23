@@ -494,8 +494,11 @@
     for (var i = 0; i < btns.length; i++) {
       var on = btns[i].getAttribute('data-lang') === lang;
       btns[i].classList.toggle('active', on);
-      btns[i].setAttribute('aria-pressed', on ? 'true' : 'false');
+      btns[i].setAttribute('aria-checked', on ? 'true' : 'false');
     }
+    var code = document.querySelector('.lang-switch .lang-code');
+    if (code) code.textContent = lang.toUpperCase();
+    closeMenu();
     document.documentElement.classList.remove('i18n-pending');
   }
 
@@ -513,10 +516,33 @@
   var nativeAlert = window.alert;
   window.alert = function (msg) { return nativeAlert.call(window, lang === 'en' ? (toEN(msg) || msg) : msg); };
 
-  // Sélecteur FR / EN
+  // Sélecteur de langue : « FR ▾ » ouvre un petit menu Français / English
+  function menuParts() {
+    var sw = document.querySelector('.lang-switch');
+    return sw ? { btn: sw.querySelector('.lang-current'), menu: sw.querySelector('.lang-menu') } : null;
+  }
+  function closeMenu() {
+    var m = menuParts(); if (!m || !m.menu) return;
+    m.menu.hidden = true; m.btn.setAttribute('aria-expanded', 'false');
+  }
+  function openMenu() {
+    var m = menuParts(); if (!m || !m.menu) return;
+    m.menu.hidden = false; m.btn.setAttribute('aria-expanded', 'true');
+    var cur = m.menu.querySelector('[data-lang="' + lang + '"]'); if (cur) cur.focus();
+  }
   document.addEventListener('click', function (e) {
-    var b = e.target.closest && e.target.closest('.lang-switch [data-lang]');
-    if (b) setLang(b.getAttribute('data-lang'), true);
+    if (!e.target.closest) return;
+    var item = e.target.closest('.lang-switch [data-lang]');
+    if (item) { setLang(item.getAttribute('data-lang'), true); return; }
+    if (e.target.closest('.lang-current')) {
+      var m = menuParts();
+      if (m.menu.hidden) openMenu(); else closeMenu();
+      return;
+    }
+    if (!e.target.closest('.lang-switch')) closeMenu();
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') { var m = menuParts(); if (m && !m.menu.hidden) { closeMenu(); m.btn.focus(); } }
   });
 
   // Langue de départ : ?lang=  →  choix mémorisé  →  langue du navigateur
