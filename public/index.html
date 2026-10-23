@@ -456,16 +456,27 @@ if(l==='en'){var h=document.documentElement;h.lang='en';h.classList.add('i18n-pe
   }
   @media (max-width: 1000px) {
     .nav-links { display: none; }
+    /* Sans les liens : logo à gauche, bouton au centre, langue à droite */
+    nav { display: grid; grid-template-columns: minmax(0,1fr) auto minmax(0,1fr); align-items: center; column-gap: .5rem; }
+    .nav-logo { justify-self: start; }
+    .nav-right { display: contents; }
+    .btn-nav { justify-self: center; }
+    .lang-switch { justify-self: end; }
   }
   @media (max-width: 768px) {
     .nav-right { gap: .9rem; }
     .lang-current { font-size: 11px; }
   }
+  @media (max-width: 440px) {
+    .nav-logo svg { height: 52px; }
+  }
   @media (max-width: 400px) {
     nav { padding-left: .9rem; padding-right: .9rem; }
-    .nav-logo svg { height: 52px; }
     .nav-right { gap: .55rem; }
     .btn-nav { font-size: 11px; padding: .45rem .8rem; }
+  }
+  @media (max-width: 345px) {
+    .nav-logo svg { height: 40px; }
     .lang-current { padding: .5rem .15rem; }
   }
 </style>
